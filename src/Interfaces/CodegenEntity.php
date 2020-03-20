@@ -1,5 +1,5 @@
 <?php
-namespace AlexeyYashin\Codegen;
+namespace AlexeyYashin\Codegen\Interfaces;
 
 interface CodegenEntity
 {

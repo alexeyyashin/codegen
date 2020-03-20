@@ -1,6 +1,7 @@
 <?php
 namespace AlexeyYashin\Codegen;
 
+use AlexeyYashin\Codegen\Interfaces\CodegenEntity;
 use BadMethodCallException;
 
 class Factory

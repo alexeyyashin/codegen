@@ -2,6 +2,7 @@
 
 namespace AlexeyYashin\Codegen;
 
+use AlexeyYashin\Codegen\Interfaces\CodegenEntity;
 use AlexeyYashin\EString\EString;
 use BadMethodCallException;
 
@@ -64,6 +65,20 @@ class LineStreak implements CodegenEntity
         return $this;
     }
 
+    public function tab()
+    {
+        $this->Tab++;
+
+        return $this;
+    }
+
+    public function untab()
+    {
+        $this->Tab === 0 ? $this->Tab : $this->Tab--;
+
+        return $this;
+    }
+
     public function end()
     {
         end($this->lines);
@@ -79,21 +94,21 @@ class LineStreak implements CodegenEntity
         $resultText = '';
 
         foreach ($this->lines as $line) {
-            $line = (new EString($line))->trim();
+            $line = estring($line)->trim();
             if (
                 $line->startsWith('}')
                 || $line->startsWith(')')
                 || $line->startsWith(']')
             ) {
-                $this->Tab--;
+                $this->untab();
             }
-            $resultText .= str_repeat($tabSymbol, $this->Tab) . $line . PHP_EOL;
+            $resultText .= str_repeat($tabSymbol, $this->getTab()) . $line . PHP_EOL;
             if (
                 $line->endsWith('{')
                 || $line->endsWith('(')
                 || $line->endsWith('[')
             ) {
-                $this->Tab++;
+                $this->tab();
             }
         }
 
